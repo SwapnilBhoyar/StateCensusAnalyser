@@ -1,7 +1,7 @@
 public class StateCensusAnalyserException extends Exception {
 
     enum ExceptionType {
-        INCORRECT_FILE_PATH
+        INCORRECT_FILE_PATH, INCORRECT_FILE_TYPE
     }
     ExceptionType type;
 

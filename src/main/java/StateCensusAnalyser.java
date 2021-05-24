@@ -18,7 +18,7 @@ public class StateCensusAnalyser {
             Iterable<CSVStateCensus> censusCSVIterable = () -> CsvStateCensusIterator;
             count = (int) StreamSupport.stream(censusCSVIterable.spliterator(), false).count();
         } catch (NoSuchFileException n) {
-            throw new StateCensusAnalyserException("file dose not exist", StateCensusAnalyserException.ExceptionType.INCORRECT_FILE_PATH);
+            throw new StateCensusAnalyserException("file type is wrong", StateCensusAnalyserException.ExceptionType.INCORRECT_FILE_TYPE);
         } catch (IOException e) {
             e.printStackTrace();
         }
