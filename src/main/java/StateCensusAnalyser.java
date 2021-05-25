@@ -42,14 +42,16 @@ public class StateCensusAnalyser {
         return count;
     }
 
-    public int loadStateCodeData(String filePath) {
+    public int loadStateCodeData(String filePath) throws StateCensusAnalyserException {
         int count = 0;
         try(Reader reader = Files.newBufferedReader(Paths.get(filePath))) {
             CsvToBean<CSVStateCode> csvToBean = new CsvToBeanBuilder<CSVStateCode>(reader).withType(CSVStateCode.class).withIgnoreLeadingWhiteSpace(true).build();
             Iterator<CSVStateCode> CsvStateCensusIterator = csvToBean.iterator();
             Iterable<CSVStateCode> censusCSVIterable = () -> CsvStateCensusIterator;
             count = (int) StreamSupport.stream(censusCSVIterable.spliterator(), false).count();
-        } catch (IOException e) {
+        }catch (NoSuchFileException n) {
+            throw new StateCensusAnalyserException("file dose not exist", StateCensusAnalyserException.ExceptionType.INCORRECT_FILE_PATH);
+        }catch (IOException e) {
             e.printStackTrace();
         }
         return count;
