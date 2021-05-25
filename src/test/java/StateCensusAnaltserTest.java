@@ -11,6 +11,7 @@ class StateCensusAnalyserTest {
     private static final String INDIA_CENSUS_FILE_CONTENT = "./src/main/resources/IndiaStateCensusData.csv";
     private static final String INDIA_STATE_CODE_FILE_CONTENT = "./src/main/resources/IndiaStateCode.csv";
     private static final String INDIA_CENSUS_FILE_HEADER = "./src/test/resources/IndiaStateCensusDataHeader.csv";
+    private static final String INDIA_STATE_CODE_FILE_HEADER = "./src/test/resources/IndiaStateCensusDataHeader.csv";
     StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
 
     @Test
@@ -62,6 +63,7 @@ class StateCensusAnalyserTest {
             e.printStackTrace();
         }
     }
+
     //TC-.2.3
     @Test
     public void givenWrongStateCodeCsvFileTypeShouldReturnException() {
@@ -82,6 +84,7 @@ class StateCensusAnalyserTest {
             e.printStackTrace();
         }
     }
+
     //TC-2.4
     @Test
     public void givenWrongStateCodeCsvFileContentShouldReturnException() {
@@ -98,7 +101,17 @@ class StateCensusAnalyserTest {
         try {
             stateCensusAnalyser.loadIncorrectCensusData(INDIA_CENSUS_FILE_HEADER);
         } catch (StateCensusAnalyserException e) {
-            Assertions.assertEquals("wrong filename", e.getMessage());
+            Assertions.assertEquals("wrong header", e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    //TC-2.5
+    @Test
+    public void givenWrongStateCodeCsvFileHeaderShouldReturnException() {
+        try {
+            stateCensusAnalyser.loadStateCodeIncorrectData(INDIA_CENSUS_FILE_HEADER);
+        } catch (StateCensusAnalyserException e) {
+            Assertions.assertEquals("wrong header", e.getMessage());
             e.printStackTrace();
         }
     }

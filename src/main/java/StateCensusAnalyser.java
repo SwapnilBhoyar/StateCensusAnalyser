@@ -35,7 +35,7 @@ public class StateCensusAnalyser {
             Iterable<CSVStateCensus> censusCSVIterable = () -> CsvStateCensusIterator;
             count = (int) StreamSupport.stream(censusCSVIterable.spliterator(), false).count();
         } catch (NoSuchFileException n) {
-            throw new StateCensusAnalyserException("wrong filename", StateCensusAnalyserException.ExceptionType.INCORRECT_FILE_HEADER);
+            throw new StateCensusAnalyserException("wrong header", StateCensusAnalyserException.ExceptionType.INCORRECT_FILE_HEADER);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -53,6 +53,21 @@ public class StateCensusAnalyser {
             throw new StateCensusAnalyserException("wrong delimitation", StateCensusAnalyserException.ExceptionType.INCORRECT_FILE_CONTENT);
         } catch (NoSuchFileException n) {
             throw new StateCensusAnalyserException("file dose not exist", StateCensusAnalyserException.ExceptionType.INCORRECT_FILE_PATH);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public int loadStateCodeIncorrectData(String filePath) throws StateCensusAnalyserException {
+        int count = 0;
+        try(Reader reader = Files.newBufferedReader(Paths.get(filePath))) {
+            CsvToBean<CSVStateCode> csvToBean = new CsvToBeanBuilder<CSVStateCode>(reader).withType(CSVStateCode.class).withIgnoreLeadingWhiteSpace(true).build();
+            Iterator<CSVStateCode> CsvStateCensusIterator = csvToBean.iterator();
+            Iterable<CSVStateCode> censusCSVIterable = () -> CsvStateCensusIterator;
+            count = (int) StreamSupport.stream(censusCSVIterable.spliterator(), false).count();
+        } catch (NoSuchFileException n) {
+            throw new StateCensusAnalyserException("wrong header", StateCensusAnalyserException.ExceptionType.INCORRECT_FILE_HEADER);
         } catch (IOException e) {
             e.printStackTrace();
         }
