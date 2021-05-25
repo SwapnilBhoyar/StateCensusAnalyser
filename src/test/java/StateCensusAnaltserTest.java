@@ -6,8 +6,7 @@ class StateSensusAnalyserTest {
     private static final String WRONG_INDIA_CENSUS_FILE_PATH = "./src/main/resources/IndiaStateCensusData.csv";
     private static final String INDIA_CENSUS_FILE_TYPE = "./src/main/resources/IndiaStateCensusData.py";
     private static final String INDIA_CENSUS_FILE_CONTENT = "./src/main/resources/IndiaStateCensusData.csv";
-
-
+    private static final String INDIA_CENSUS_FILE_HEADER = "./src/test/resources/IndiaStateCensusDataHeader.csv";
     StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
 
     @Test
@@ -45,6 +44,16 @@ class StateSensusAnalyserTest {
             stateCensusAnalyser.loadCensusData(INDIA_CENSUS_FILE_CONTENT);
         } catch (StateCensusAnalyserException e) {
             Assertions.assertEquals("wrong delimitation", e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenWrongStateCsvFileHeaderShouldReturnException() {
+        try {
+            stateCensusAnalyser.loadIncorrectCensusData(INDIA_CENSUS_FILE_HEADER);
+        } catch (StateCensusAnalyserException e) {
+            Assertions.assertEquals("wrong filename", e.getMessage());
             e.printStackTrace();
         }
     }
