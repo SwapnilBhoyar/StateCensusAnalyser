@@ -17,7 +17,9 @@ public class StateCensusAnalyser {
             Iterator<CSVStateCensus> CsvStateCensusIterator = csvToBean.iterator();
             Iterable<CSVStateCensus> censusCSVIterable = () -> CsvStateCensusIterator;
             count = (int) StreamSupport.stream(censusCSVIterable.spliterator(), false).count();
-        } catch (NoSuchFileException n) {
+        } catch (RuntimeException r) {
+            throw new StateCensusAnalyserException("wrong delimitation", StateCensusAnalyserException.ExceptionType.INCORRECT_FILE_CONTENT);
+        }catch (NoSuchFileException n) {
             throw new StateCensusAnalyserException("file type is wrong", StateCensusAnalyserException.ExceptionType.INCORRECT_FILE_TYPE);
         } catch (IOException e) {
             e.printStackTrace();
