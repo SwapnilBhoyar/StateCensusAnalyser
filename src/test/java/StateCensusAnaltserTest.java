@@ -9,6 +9,7 @@ class StateCensusAnalyserTest {
     private static final String INDIA_CENSUS_FILE_TYPE = "./src/main/resources/IndiaStateCensusData.py";
     private static final String INDIA_STATE_CODE_FILE_TYPE = "./src/test/resources/IndiaStateCode.py";
     private static final String INDIA_CENSUS_FILE_CONTENT = "./src/main/resources/IndiaStateCensusData.csv";
+    private static final String INDIA_STATE_CODE_FILE_CONTENT = "./src/main/resources/IndiaStateCode.csv";
     private static final String INDIA_CENSUS_FILE_HEADER = "./src/test/resources/IndiaStateCensusDataHeader.csv";
     StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
 
@@ -76,6 +77,16 @@ class StateCensusAnalyserTest {
     public void givenWrongStateCsvFileContentShouldReturnException() {
         try {
             stateCensusAnalyser.loadCensusData(INDIA_CENSUS_FILE_CONTENT);
+        } catch (StateCensusAnalyserException e) {
+            Assertions.assertEquals("wrong delimitation", e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    //TC-2.4
+    @Test
+    public void givenWrongStateCodeCsvFileContentShouldReturnException() {
+        try {
+            stateCensusAnalyser.loadStateCodeData(INDIA_STATE_CODE_FILE_CONTENT);
         } catch (StateCensusAnalyserException e) {
             Assertions.assertEquals("wrong delimitation", e.getMessage());
             e.printStackTrace();
